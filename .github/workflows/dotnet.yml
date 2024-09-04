@@ -10,7 +10,7 @@ on:
     branches: [ "main" ]
 
 env:
-  CONTAINER_NAME: ${{secrets.DOCKERHUB_USERNAME}}/${{secrets.DOCKERHUB_CONTAINER_NAME}}  
+  CONTAINER_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_CONTAINER_NAME }}  
 
 jobs:
   build:
@@ -53,5 +53,5 @@ jobs:
         file: ./Financeiro.API/Dockerfile
         push: true
         tags: |
-          ${{CONTAINER_NAME}}:${{steps.build-number.outputs.BUILD_NUMBER}}
-          ${{CONTAINER_NAME}}:latest
+          ${{ env.CONTAINER_NAME }}:${{ steps.build-number.outputs.BUILD_NUMBER }}
+          ${{ env.CONTAINER_NAME }}:latest
