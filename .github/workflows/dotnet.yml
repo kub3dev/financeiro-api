@@ -9,6 +9,9 @@ on:
   pull_request:
     branches: [ "main" ]
 
+env:
+  CONTAINER_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_CONTAINER_NAME }}  
+
 jobs:
   build:
 
@@ -26,3 +29,28 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Build Number
+      id: build-number
+      run: echo "::set-output name=BUILD_NUMBER::$(date '+%Y.%-m.%-d.%-H.%-M.%-S')" # this is the build number of our image as date
+
+    - name: Log into Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Push the image to Docker Hub
+      uses: docker/build-push-action@v6
+      with:
+        context: .
+        file: ./Financeiro.API/Dockerfile
+        push: true
+        tags: |
+          $CONTAINER_NAME:${{steps.build-number.outputs.BUILD_NUMBER}}
+          $CONTAINER_NAME:latest
