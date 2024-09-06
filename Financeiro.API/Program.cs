@@ -73,11 +73,16 @@ app.MapGet("/vouchers", () =>
 
 app.MapPost("/auth/login", async (IUserService userService, TokenUserRequestDto request) =>
 {
-    var response = await userService.Token(request);
+    try
+    {
+        var response = await userService.Token(request);
 
-    if (response == null) return Results.Unauthorized();
-
-    return Results.Ok(request);
+        return Results.Ok(response);
+    }
+    catch (Exception)
+    {
+        return Results.Unauthorized();
+    }
 })
 .WithName("Token")
 .WithOpenApi();

@@ -5,5 +5,5 @@ namespace Financeiro.Core.Services;
 
 public interface IUserService
 {
-  Task<TokenUserResponseDto?> Token(TokenUserRequestDto request);
+  Task<string> Token(TokenUserRequestDto request);
 }

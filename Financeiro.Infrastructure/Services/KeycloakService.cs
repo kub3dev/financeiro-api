@@ -29,26 +29,24 @@ public class KeycloakService : IUserService
     // _httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
   }
 
-  public async Task<TokenUserResponseDto?> Token(TokenUserRequestDto request)
+  public async Task<string> Token(TokenUserRequestDto request)
   {
-    IEnumerable<KeyValuePair<string, string>> data = new List<KeyValuePair<string, string>>();
-    data.Append(new KeyValuePair<string, string>("grant_type", "password"));
-    data.Append(new KeyValuePair<string, string>("username", request.Email));
-    data.Append(new KeyValuePair<string, string>("password", request.Password));
-    data.Append(new KeyValuePair<string, string>("client_id", _resource));
-    data.Append(new KeyValuePair<string, string>("client_secret", _secret));
-    data.Append(new KeyValuePair<string, string>("scope", "roles"));
-
-    using (var content = new FormUrlEncodedContent(data))
+    var payload = new Dictionary<string, string>
     {
-      content.Headers.Clear();
-      content.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
+      { "grant_type", "password" },
+      { "password", request.Password },
+      { "username", request.Email },
+      { "client_id", _resource },
+      { "client_secret", _secret },
+      { "scope", "roles" }
+    };
 
-      using HttpResponseMessage response = await _httpClient.PutAsync(string.Format("realms/{0}/protocol/openid-connect/token", _realm), content);
+    var content = new FormUrlEncodedContent(payload);
 
-      if (!response.IsSuccessStatusCode) return null;
+    var response = await _httpClient.PostAsync(string.Format("realms/{0}/protocol/openid-connect/token", _realm), content);
 
-      return await response.Content.ReadFromJsonAsync<TokenUserResponseDto>();
-    }
+    if (!response.IsSuccessStatusCode) throw new Exception(await response.Content.ReadAsStringAsync());
+
+    return (await response.Content.ReadAsStringAsync()).ToString();
   }
 }
