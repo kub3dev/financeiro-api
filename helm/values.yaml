@@ -8,7 +8,7 @@ image:
   repository: fclebinho/financeiro-api
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 2024.9.6.3.48.2
+  tag: 2024.9.6.11.57.43
 
 imagePullSecrets: []
 nameOverride: ""
