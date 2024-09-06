@@ -79,11 +79,12 @@ app.MapPost("/auth/login", async (IUserService userService, TokenUserRequestDto 
 
         return Results.Ok(response);
     }
-    catch (Exception)
+    catch (Exception e)
     {
-        return Results.Unauthorized();
+        throw e;
     }
 })
+.AllowAnonymous()
 .WithName("Token")
 .WithOpenApi();
 
