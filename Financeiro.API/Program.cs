@@ -88,6 +88,10 @@ app.MapPost("/auth/login", async (IUserService userService, TokenUserRequestDto 
 .WithName("Token")
 .WithOpenApi();
 
+app.MapPost("/health", async (IUserService userService, TokenUserRequestDto request) => Results.Ok())
+    .AllowAnonymous()
+    .WithOpenApi();
+
 app.UseAuthentication();
 app.UseAuthorization();
 

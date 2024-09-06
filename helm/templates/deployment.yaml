@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: identity-deployment
+  namespace: development
+  labels:
+    app: identity
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: identity
+  template:
+    metadata:
+      labels:
+        app: identity
+    spec:
+      containers:
+        - name: identity
+          image: fclebinho/financeiro-api:{{ .Values.env.APP_VERSION }}
+          ports:
+            - containerPort: 8080
+          env:
+            - name: Keycloak__credentials__secret
+              valueFrom:
+                secretKeyRef:
+                  name: identity-secret
+                  key: credentialsSecret
+            - name: Keycloak__realm
+              valueFrom:
+                configMapKeyRef:
+                  name: identity-config
+                  key: realm
+            - name: Keycloak__auth_server_url
+              valueFrom:
+                configMapKeyRef:
+                  name: identity-config
+                  key: authServerUrl
+            - name: Keycloak__ssl_required
+              valueFrom:
+                configMapKeyRef:
+                  name: identity-config
+                  key: sslRequired
+            - name: Keycloak__resource
+              valueFrom:
+                configMapKeyRef:
+                  name: identity-config
+                  key: resource
+            - name: Keycloak__confidential_port
+              valueFrom:
+                configMapKeyRef:
+                  name: identity-config
+                  key: confidentialPort
+            - name: Keycloak__verify_token_audience
+              valueFrom:
+                configMapKeyRef:
+                  name: identity-config
+                  key: verifyTokenAudience
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 3

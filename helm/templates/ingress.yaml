@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: identity-ingress
+  namespace: development
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-issuer
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: identity-service
+                port:
+                  number: 8080
+  tls:
+    - hosts:
+        - identity.kub3.dev
+      secretName: le-identity-kub3-dev-cert-tls
