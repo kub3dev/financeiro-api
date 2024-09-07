@@ -8,7 +8,7 @@ image:
   repository: fclebinho/identity-api
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 2024.9.7.2.57.27
+  tag: 2024.9.7.2.49.45
 
 imagePullSecrets: []
 nameOverride: ""
@@ -42,8 +42,6 @@ securityContext: {}
 service:
   type: ClusterIP
   port: 8080
-  protocol: TCP
-  targetPort: 8080
 
 ingress:
   enabled: true
@@ -76,14 +74,12 @@ resources: {}
 
 livenessProbe:
   httpGet:
-    path: /health
+    path: /
     port: http
-    initialDelaySeconds: 120
 readinessProbe:
   httpGet:
-    path: /health
+    path: /
     port: http
-    initialDelaySeconds: 120
 
 autoscaling:
   enabled: false
