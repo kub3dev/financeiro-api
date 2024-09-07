@@ -53,8 +53,8 @@ ingress:
   hosts:
     - host: api.kub3.dev
       paths:
-        - path: /auth
-          pathType: ImplementationSpecific
+        - path: /
+          pathType: Prefix
   tls:
     - secretName: le-identity-tls
       hosts:
