@@ -70,7 +70,7 @@ app.MapGet("/vouchers", () =>
 .WithOpenApi()
 .RequireAuthorization();
 
-app.MapPost("/auth/login", async (IUserService userService, TokenUserRequestDto request) =>
+app.MapPost("/login", async (IUserService userService, TokenUserRequestDto request) =>
 {
     try
     {
