@@ -57,7 +57,7 @@ jobs:
 
       - name: Update values.yaml
         run: |
-          cd helm
+          cd Identity.API/helm
           sed -i 's|tag:.*|tag: '${{ steps.build-number.outputs.BUILD_NUMBER }}'|' values.yaml 
           git config --global user.name 'GitHub Actions'
           git config --global user.email 'actions@github.com'
