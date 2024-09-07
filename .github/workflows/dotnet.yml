@@ -6,8 +6,12 @@ name: .NET
 on:
   push:
     branches: ["main"]
+    paths:
+      - '!helm/**'
   pull_request:
     branches: ["main"]
+    paths:
+      - '!helm/**'
 
 env:
   CONTAINER_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/${{ vars.DOCKERHUB_CONTAINER_NAME }}
