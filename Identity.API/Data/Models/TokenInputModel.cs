@@ -1,6 +1,6 @@
 using System;
 
-namespace Financeiro.Infrastructure.Models;
+namespace Identity.Models;
 
 public class TokenInputModel
 {

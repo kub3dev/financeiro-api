@@ -1,7 +1,7 @@
 using System;
 using Newtonsoft.Json;
 
-namespace Financeiro.Core.Domain.Entities;
+namespace Identity.Domain.Entities;
 
 public class Token
 {

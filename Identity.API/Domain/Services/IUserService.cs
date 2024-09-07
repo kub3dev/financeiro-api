@@ -1,7 +1,7 @@
 using System;
-using Financeiro.Core.Domain.Dtos;
+using Identity.Domain.Dtos;
 
-namespace Financeiro.Core.Services;
+namespace Identity.Services;
 
 public interface IUserService
 {

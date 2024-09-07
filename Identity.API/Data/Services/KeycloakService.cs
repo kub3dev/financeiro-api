@@ -1,11 +1,9 @@
 using System;
 using System.Net.Http.Json;
-using Financeiro.Core.Domain.Dtos;
-using Financeiro.Core.Services;
-using Financeiro.Infrastructure.Models;
+using Identity.Domain.Dtos;
 using Microsoft.Extensions.Configuration;
 
-namespace Financeiro.Infrastructure.Services;
+namespace Identity.Services;
 
 public class KeycloakService : IUserService
 {

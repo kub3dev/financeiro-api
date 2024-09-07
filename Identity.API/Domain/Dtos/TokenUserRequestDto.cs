@@ -1,4 +1,4 @@
-namespace Financeiro.Core.Domain.Dtos;
+namespace Identity.Domain.Dtos;
 
 public record class TokenUserRequestDto
 {

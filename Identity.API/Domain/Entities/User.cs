@@ -1,6 +1,6 @@
 using System;
 
-namespace Financeiro.Core.Domain.Entities;
+namespace Identity.Domain.Entities;
 
 public class User
 {

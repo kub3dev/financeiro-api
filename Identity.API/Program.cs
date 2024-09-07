@@ -1,6 +1,5 @@
-using Financeiro.Core.Domain.Dtos;
-using Financeiro.Core.Services;
-using Financeiro.Infrastructure.Services;
+using Identity.Domain.Dtos;
+using Identity.Services;
 using Keycloak.AuthServices.Authentication;
 using Microsoft.OpenApi.Models;
 
@@ -12,7 +11,7 @@ builder.Services.AddSingleton<IUserService, KeycloakService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new() { Title = "Vouchfy", Version = "v1" });
+    c.SwaggerDoc("v1", new() { Title = "Identity", Version = "v1" });
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
     {
         Name = "Authorization",
